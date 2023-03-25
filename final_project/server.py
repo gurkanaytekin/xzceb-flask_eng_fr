@@ -1,27 +1,29 @@
-from machinetranslation import translator
 from flask import Flask, render_template, request
+from machinetranslation import translator
 
 app = Flask("Web Translator")
 
 @app.route("/englishToFrench")
-def englishToFrench():
-    textToTranslate = request.args.get('textToTranslate')
+def english_to_french():
+    """Enghlish to French translator method"""
+    text_to_translate = request.args.get('textToTranslate')
     translation = translator.language_translator.translate(
-    text=textToTranslate,
+    text=text_to_translate,
     model_id='en-fr').get_result().get("translations")[0].get("translation")
     return translation
 
 @app.route("/frenchToEnglish")
-def frenchToEnglish():
-    textToTranslate = request.args.get('textToTranslate')
+def french_to_english():
+    """French to English translator method"""
+    text_to_translate = request.args.get('textToTranslate')
     translation = translator.language_translator.translate(
-    text=textToTranslate,
+    text=text_to_translate,
     model_id='fr-en').get_result().get("translations")[0].get("translation")
-    return textToTranslate
+    return translation
 
 @app.route("/")
-def renderIndexPage():
-    # Write the code to render template
+def render_index_page():
+    """Render Index Method"""
     return render_template('index.html')
 
 if __name__ == "__main__":
